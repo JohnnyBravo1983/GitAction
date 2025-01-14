@@ -9,3 +9,5 @@ edition = "2021"
 [dependencies]
 # Polars-biblioteket brukes for DataFrame-håndtering
 polars = "0.45.1"
+
+echo "# Test endring for GitHub Actions" >> Cargo.toml
