@@ -1,0 +1,20 @@
+# Ignorer Rust sin target-mappe (byggfiler)
+/target/
+
+# Ignorer editor- og IDE-filer
+.idea/
+.vscode/
+
+# Ignorer systemspesifikke filer
+.DS_Store
+Thumbs.db
+
+# Ignorer loggfiler og midlertidige filer
+*.log
+*.tmp
+*.lock
+
+# Ignorer dynamiske biblioteker (PyO3 eller lignende)
+*.so
+*.dll
+*.dylib

@@ -1,0 +1,11 @@
+[package]
+# Navn på prosjektet
+name = "rust_dataframe_utils"
+# Versjon på prosjektet
+version = "0.1.0"
+# Rust-utgaven som brukes (2021 er den nyeste og anbefalte for moderne prosjekter)
+edition = "2021"
+
+[dependencies]
+# Polars-biblioteket brukes for DataFrame-håndtering
+polars = "0.45.1"
