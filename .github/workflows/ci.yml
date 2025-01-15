@@ -32,6 +32,12 @@ jobs:
       with:
         python-version: '3.12'
 
+    - name: Create and activate virtual environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate  # For Linux/Mac
+        .venv\Scripts\activate     # For Windows
+
     - name: Install maturin
       run: pip install maturin
 
