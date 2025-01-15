@@ -36,3 +36,6 @@ fn rust_dataframe_utils(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sum_numeric_columns, m)?)?;
     Ok(())
 }
+
+
+// Dette er en testendring for å trigge en GitHub Actions-workflow
