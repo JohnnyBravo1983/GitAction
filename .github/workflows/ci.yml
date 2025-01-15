@@ -3,48 +3,38 @@ name: Rust and Python Build and Test
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
-    branches:
-      - master
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Rust
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Install Rust
       uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
+        override: true
 
-    - name: Build Rust project
-      run: cargo build --release
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install maturin pytest
+
+    - name: Build and install Rust module
+      run: python -m maturin develop
 
     - name: Run Rust tests
       run: cargo test
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
-
-    - name: Create and activate virtual environment
-      run: |
-        python -m venv .venv
-        source .venv/bin/activate
-
-    - name: Install maturin
-      run: pip install maturin
-
-    - name: Build and install Rust module
-      run: maturin develop --bindings pyo3
-
-    - name: Install Python test dependencies
-      run: pip install pytest
 
     - name: Run Python tests
       run: pytest test_rust_dataframe_utils.py
