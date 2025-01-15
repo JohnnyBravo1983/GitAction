@@ -21,8 +21,25 @@ jobs:
       with:
         toolchain: stable
 
-    - name: Build project
+    - name: Build Rust project
       run: cargo build --release
 
-    - name: Run tests
+    - name: Run Rust tests
       run: cargo test
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install maturin
+      run: pip install maturin
+
+    - name: Build and install Rust module
+      run: maturin develop
+
+    - name: Install Python test dependencies
+      run: pip install pytest
+
+    - name: Run Python tests
+      run: pytest test_rust_dataframe_utils.py
