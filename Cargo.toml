@@ -3,10 +3,20 @@
 name = "rust_dataframe_utils"
 # Versjon på prosjektet
 version = "0.1.0"
-# Rust-utgaven som brukes (2021 er den nyeste og anbefalte for moderne prosjekter)
+# Rust-utgaven som brukes
 edition = "2021"
 
 [dependencies]
 # Polars-biblioteket brukes for DataFrame-håndtering
 polars = "0.45.1"
 
+# PyO3 brukes for å lage Python-bindings
+pyo3 = { version = "0.21", features = ["extension-module"] }
+
+# PyO3-Arrow for støtte med Arrow-DataFrames
+pyo3-arrow = "0.3"
+
+[lib]
+# Konfigurer prosjektet som et delt bibliotek
+name = "rust_dataframe_utils"
+crate-type = ["cdylib"]
