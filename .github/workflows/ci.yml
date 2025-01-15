@@ -1,5 +1,3 @@
-name: Rust and Python Build and Test
-
 on:
   push:
     branches:
@@ -46,12 +44,17 @@ jobs:
 
     - name: Install maturin
       run: pip install maturin
-     
+
     - name: Build and install Rust module
-      run: maturin develop --bindings pyo3 --log-level debug
-   
+      run: maturin develop --bindings pyo3 --verbose
+
+    - name: Verify installed packages
+      run: pip list
+
     - name: Install Python test dependencies
       run: pip install pytest
 
     - name: Run Python tests
-      run: pytest test_rust_dataframe_utils.py
+      run: |
+        export PYTHONPATH=$(pwd):$PYTHONPATH
+        pytest tests/
