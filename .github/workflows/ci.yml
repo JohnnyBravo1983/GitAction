@@ -46,10 +46,10 @@ jobs:
 
     - name: Install maturin
       run: pip install maturin
-
+     
     - name: Build and install Rust module
-      run: maturin develop --bindings pyo3
-
+      run: maturin develop --bindings pyo3 --log-level debug
+   
     - name: Install Python test dependencies
       run: pip install pytest
 
