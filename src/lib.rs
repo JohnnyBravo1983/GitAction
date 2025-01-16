@@ -8,12 +8,17 @@ pub fn sum_numeric_columns(data: Vec<Vec<f64>>) -> PyResult<f64> {
     let series_columns: Vec<Series> = data
         .into_iter()
         .enumerate()
-        .map(|(i, col)| Series::new(format!("col_{}", i), col))
+        .map(|(i, col)| Series::new(format!("col_{}", i).into(), col))
         .collect();
 
-    // Opprett DataFrame direkte fra Series
-    let dataframe = DataFrame::new(series_columns)
-        .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+    // Konverter Series til Columns
+    let mut columns = Vec::new();
+    for series in series_columns {
+        columns.push(series.into_column());
+    }
+
+    // Opprett DataFrame
+    let dataframe = DataFrame::new(columns).map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
 
     // Summer alle numeriske kolonner
     let mut total_sum = 0.0;
@@ -31,3 +36,5 @@ fn rust_dataframe_utils(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sum_numeric_columns, m)?)?;
     Ok(())
 }
+
+
