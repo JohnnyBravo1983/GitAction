@@ -44,6 +44,7 @@ jobs:
       run: |
         export PATH="$HOME/.cargo/bin:$PATH"
         maturin develop --bindings pyo3
+        pip install .
 
     - name: Verify installed packages
       run: pip list
