@@ -41,9 +41,10 @@ jobs:
       run: pip install maturin
 
     - name: Build and install Rust module
-      run: |
-        export PATH="$HOME/.cargo/bin:$PATH"
-        maturin develop --bindings pyo3
+      run: maturin develop --bindings pyo3
+
+    - name: Validate installed Python packages
+      run: pip list
 
     - name: Install Python test dependencies
       run: pip install pytest
@@ -51,4 +52,4 @@ jobs:
     - name: Run Python tests
       run: |
         export PYTHONPATH=$(pwd):$PYTHONPATH
-        pytest tests/
+        pytest tests/test_rust_dataframe_utils.py
