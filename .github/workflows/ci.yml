@@ -35,20 +35,15 @@ jobs:
     - name: Create and activate virtual environment
       run: |
         python -m venv .venv
-        if [ -f ".venv/bin/activate" ]; then
-          source .venv/bin/activate
-        elif [ -f ".venv/Scripts/activate" ]; then
-          .venv/Scripts/activate
-        else
-          echo "Virtual environment activation script not found."
-          exit 1
-        fi
+        source .venv/bin/activate
 
     - name: Install maturin
       run: pip install maturin
 
     - name: Build and install Rust module
-      run: maturin develop --bindings pyo3
+      run: |
+        export PATH="$HOME/.cargo/bin:$PATH"
+        maturin develop --bindings pyo3
 
     - name: Install Python test dependencies
       run: pip install pytest
