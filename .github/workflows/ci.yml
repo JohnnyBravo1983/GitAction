@@ -45,6 +45,7 @@ jobs:
 
     - name: Install Python test dependencies
       run: pip install pytest
-
     - name: Run Python tests
-      run: pytest test_rust_dataframe_utils.py
+      run: |
+        export PYTHONPATH=$(pwd):$PYTHONPATH
+        pytest tests/
