@@ -38,14 +38,22 @@ jobs:
         source .venv/bin/activate
 
     - name: Install maturin
-      run: pip install maturin
+      run: |
+        source .venv/bin/activate
+        pip install maturin
 
     - name: Build and install Rust module
-      run: maturin develop --bindings pyo3
+      run: |
+        source .venv/bin/activate
+        maturin develop --bindings pyo3
 
     - name: Install Python test dependencies
-      run: pip install pytest
+      run: |
+        source .venv/bin/activate
+        pip install pytest
+
     - name: Run Python tests
       run: |
+        source .venv/bin/activate
         export PYTHONPATH=$(pwd):$PYTHONPATH
         pytest tests/
