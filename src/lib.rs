@@ -7,10 +7,15 @@ pub fn sum_numeric_columns(data: Vec<Vec<f64>>) -> PyResult<f64> {
     let series_columns: Vec<Series> = data
         .into_iter()
         .enumerate()
-        .map(|(i, col)| Series::new(format!("col_{}", i), col))
+        .map(|(i, col)| Series::new(format!("col_{}", i).into(), col))
         .collect();
 
-    let dataframe = DataFrame::new(series_columns).map_err(|e| {
+    let columns: Vec<Column> = series_columns
+        .into_iter()
+        .map(|series| series.into_column())
+        .collect();
+
+    let dataframe = DataFrame::new(columns).map_err(|e| {
         pyo3::exceptions::PyValueError::new_err(format!("Failed to create DataFrame: {}", e))
     })?;
 
@@ -29,4 +34,3 @@ fn rust_dataframe_utils(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sum_numeric_columns, m)?)?;
     Ok(())
 }
-
