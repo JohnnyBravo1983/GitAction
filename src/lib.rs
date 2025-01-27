@@ -2,6 +2,7 @@ use pyo3::prelude::*;
 use polars::prelude::*;
 
 /// Summerer tallene i alle numeriske kolonner fra en nested list
+//tester
 #[pyfunction]
 pub fn sum_numeric_columns(data: Vec<Vec<f64>>) -> PyResult<f64> {
     let series_columns: Vec<Series> = data
